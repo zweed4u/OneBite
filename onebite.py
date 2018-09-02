@@ -34,6 +34,27 @@ class OneBite:
         self.user_id = response.json()['user']['id']
         return response.json()
 
+    def login(self, email, password):
+        headers = {
+            'Host':             'one-bite-api.barstoolsports.com',
+            'Content-Type':     'application/json',
+            'User-Agent':       'One%20Bite/420 CFNetwork/808.2.16 Darwin/16.3.0',
+            'Connection':       'keep-alive',
+            'X-App-Build':      '420',
+            'Accept':           '*/*',
+            'Accept-Language':  'en-us',
+            'X-App-Id':         'ios',
+            'Accept-Encoding':  'gzip, deflate'
+        }
+        payload = {
+            'email': email,
+            'password': password
+        }
+        response = self.session.post('https://one-bite-api.barstoolsports.com/auth/login', json=payload, headers=headers)
+        self.token = response.json()['token']
+        self.user_id = response.json()['user']['id']
+        return response.json()
+
     def get_feed(self):
         # make sure user_id is not None
         headers = {
